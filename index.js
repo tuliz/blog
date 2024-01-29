@@ -8,11 +8,17 @@ const port = 3000;
 const posts = [];
 
 app.get('/',(req,res)=>{
-    res.render('../views/index.ejs');
+    res.render('../views/index.ejs',{posts:posts});
 });
 
-app.post('/submitForm',(req,res)=>{
+app.post('/submitPost',(req,res)=>{
+    let post ={
+        subject:req.body.subject,
+        message:req.body.message
+    };
 
+    posts.push(post);
+    res.render('../views/index.ejs',{posts:posts});
 });
 
 app.listen(port, ()=>{

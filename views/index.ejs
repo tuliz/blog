@@ -4,7 +4,8 @@
 <h2>those are your posts</h2>
 <%if(locals.posts){
     posts.forEach((post)=>{%>
-        <p><%=post%></p>
+        <h3><%=post.subject%></h3>
+        <p><%=post.message%></p>
         
     <%})
 
