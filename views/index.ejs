@@ -1,0 +1,22 @@
+<%-include('./partials/header.ejs')%>
+
+<h1>Home</h1>
+<h2>those are your posts</h2>
+<%if(locals.posts){
+    posts.forEach((post)=>{%>
+        <p><%=post%></p>
+        
+    <%})
+
+}%>
+<h3>Write a Post</h3>
+<form action="/submitPost" method="post">
+    <label for="subject">Subject:</label>
+    <input type="text" name="subject" id="subject">
+    <label for="message">Message</label>
+    <input type="text" name="message" id="message">
+    <input type="submit" value="submit" >
+</form>
+
+
+<%-include('./partials/footer.ejs')%>
