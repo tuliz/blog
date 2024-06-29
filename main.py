@@ -1,7 +1,12 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import datetime as dt
 import requests
 from post import Post
+import smtplib
+
+EMAIL=''
+PASSWORD =''
+Auth = ''
 
 app = Flask(__name__)
 
@@ -34,9 +39,22 @@ def get_about():
     return render_template('about.html')
 
 
-@app.route('/contact')
+@app.route('/contact', methods=["POST", "GET"])
 def get_contact():
-    return render_template('contact.html')
+    method = request.method
+    if method == 'GET':
+        return render_template('contact.html', message='Contact Me')
+    else:
+        user_email = request.form['email']
+        user_name = request.form['name']
+        user_phone = request.form['tel']
+        user_message = request.form['tel']
+
+        with smtplib.SMTP('smtp.gmail.com') as connection:
+            connection.starttls()
+            connection.login(Auth,PASSWORD)
+            connection.sendmail(from_addr=EMAIL, to_addrs=EMAIL, msg=f'email:{user_email}\nname:{user_name}\nphone:{user_phone}\nmessage:{user_message}')
+        return render_template('contact.html', message='Successfully sent message')
 
 
 if __name__ == '__main__':
