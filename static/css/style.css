@@ -1,8 +1,14 @@
-header{
+.container-fluid{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.top{
     background-color:#96C9F4;
 }
 
-h1{
+.title{
     color:white;
 }
 
