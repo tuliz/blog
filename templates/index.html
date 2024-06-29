@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Blog</title>
-    <link rel="stylesheet" href="static/css/style.css">
-</head>
-<body>
-<header>
-    <h1>My Blog</h1>
-</header>
-<div id="posts">
-    {%for post in posts:%}
-        <div id={{post}}>
-            <h2 id="post-title">{{post['title']}}</h2>
-            <p id="post-body">{{post['subtitle']}}</p>
-            <a id="post-link" href="#">read</a>
-        </div>
-    {% endfor%}
+    <head>
+        <meta charset="UTF-8">
+        <title>Blog</title>
+        <link rel="stylesheet" href="static/css/style.css">
+    </head>
+    <body>
+        <div id="wrapper">
+            <div class="top">
+                <div class="title"><h1>My Blog</h1></div>
+            </div>
 
-</div>
-<footer>
-    <p id="footer-text">@made by yarden tulchinsky {{year}}</p>
-</footer>
-</body>
+            {%for post in posts:%}
+                <div class="content">
+                    <div class="card ">
+                        <h2 class="post-title">{{post.title}}</h2>
+                        <p class="post-body">{{post.subtitle}}</p>
+                        <a class="post-link" href="{{ url_for('get_post', post_id=post.id) }}">Read</a>
+                    </div>
+                </div>
+            {% endfor%}
+
+        </div>
+        <footer>
+            <p id="footer-text">@made by yarden tulchinsky {{year}}</p>
+        </footer>
+    </body>
 </html>
