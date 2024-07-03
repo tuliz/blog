@@ -1,9 +1,8 @@
 from flask import Flask, render_template, request, redirect
 import datetime as dt
-import requests
 import smtplib
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import String, Float, Integer
+from sqlalchemy import String, Integer
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, URLField
@@ -28,17 +27,20 @@ bootstrap = Bootstrap5(app)
 app.config['SECRET_KEY'] = 'apple pie'
 
 # Database Post Table
+
+
 class Post(db.Model):
-    id : Mapped[int] = mapped_column(Integer, primary_key=True)
-    title : Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    title: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
     subtitle: Mapped[str] = mapped_column(String(250), nullable=False)
     author: Mapped[str] = mapped_column(String(250), nullable=False)
+    post_date: Mapped[str] = mapped_column(String(250), nullable=True)
     blog_image: Mapped[str] = mapped_column(String(250), nullable=False)
     body: Mapped[str] = mapped_column(String(250), nullable=False)
 
 
 # WtfForms form for adding new post
-class addPostForm(FlaskForm):
+class PostForm(FlaskForm):
     title = StringField(validators=[DataRequired()])
     subtitle = StringField(validators=[DataRequired()])
     author = StringField(validators=[DataRequired()])
@@ -71,19 +73,43 @@ def get_about():
 # route for moving to add post form and add the new post to database
 @app.route('/new-post', methods=['GET','POST'])
 def add_post():
-    form = addPostForm()
+    form = PostForm()
     if form.validate_on_submit():
+        currentDate = dt.datetime.now()
+        dateFormat = currentDate.strftime("%d %B, %Y")
         new_post = Post(
             title=form.title.data,
             subtitle=form.subtitle.data,
             author=form.author.data,
+            post_date=dateFormat,
             blog_image=form.blog_image.data,
             body=form.body.data
         )
         db.session.add(new_post)
         db.session.commit()
         return redirect('/')
-    return render_template('add.html', form=form)
+    return render_template('make-post.html', form=form)
+
+
+@app.route('/edit-post/<int:post_id>', methods=['GET','POST'])
+def edit_post(post_id):
+    post = db.session.execute(db.select(Post).where(Post.id == post_id)).scalar()
+    form = PostForm(
+        title=post.title,
+        subtitle=post.subtitle,
+        author=post.author,
+        blog_image=post.blog_image,
+        body=post.body
+    )
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.subtitle = form.subtitle.data
+        post.author = form.author.data
+        post.blog_image = form.blog_image.data
+        post.body = form.body.data
+        db.session.commit()
+        return redirect(f'/post/{post_id}')
+    return render_template('make-post.html' ,post=post, form=form)
 
 
 @app.route('/contact', methods=["POST", "GET"])

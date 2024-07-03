@@ -4,16 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3119b0b8-2102-4c5b-b0e6-cc4ecf35f2b9" name="Changes" comment="adding use of SQLALCHEMY DB. getting all posts from db when going to homepage. getting a specific post from db when clicking on post and going to its page to view it.">
-      <change afterPath="$PROJECT_DIR$/templates/add.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+    <list default="true" id="3119b0b8-2102-4c5b-b0e6-cc4ecf35f2b9" name="Changes" comment="move to using wtforms and create a form for adding a post, and adding a route for adding post and add a new form to database.">
+      <change afterPath="$PROJECT_DIR$/templates/make-post.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/instance/blog.db" beforeDir="false" afterPath="$PROJECT_DIR$/instance/blog.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/about.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/contact.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/contact.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/footer.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/header.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/add.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/post.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/post.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -153,7 +149,15 @@
       <option name="project" value="LOCAL‎" />
       <updated>1719997848504</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL‎-00011" summary="move to using wtforms and create a form for adding a post, and adding a route for adding post and add a new form to database.">
+      <option name="closed" value="true" />
+      <created>1720000801057</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL‎-00011" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1720000801057</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -167,6 +171,7 @@
     <MESSAGE value="adding styling with bootstrap" />
     <MESSAGE value="activating form in contact page and get the form when its sent in contact route and send an email with the data from the form" />
     <MESSAGE value="adding use of SQLALCHEMY DB. getting all posts from db when going to homepage. getting a specific post from db when clicking on post and going to its page to view it." />
-    <option name="LAST_COMMIT_MESSAGE" value="adding use of SQLALCHEMY DB. getting all posts from db when going to homepage. getting a specific post from db when clicking on post and going to its page to view it." />
+    <MESSAGE value="move to using wtforms and create a form for adding a post, and adding a route for adding post and add a new form to database." />
+    <option name="LAST_COMMIT_MESSAGE" value="move to using wtforms and create a form for adding a post, and adding a route for adding post and add a new form to database." />
   </component>
 </project>
