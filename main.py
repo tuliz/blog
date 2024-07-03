@@ -129,6 +129,12 @@ def get_contact():
             connection.sendmail(from_addr=EMAIL, to_addrs=EMAIL, msg=f'email:{user_email}\nname:{user_name}\nphone:{user_phone}\nmessage:{user_message}')
         return render_template('contact.html', message='Successfully sent message')
 
+@app.route('/delete_post/<int:post_id>', methods=['GET','DELETE'])
+def delete_post(post_id):
+    post_to_delete = db.session.execute(db.select(Post).where(Post.id == post_id)).scalar()
+    db.session.delete(post_to_delete)
+    db.session.commit()
+    return redirect('/')
 
 if __name__ == '__main__':
     app.run(debug=True)
