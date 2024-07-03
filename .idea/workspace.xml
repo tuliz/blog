@@ -4,9 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3119b0b8-2102-4c5b-b0e6-cc4ecf35f2b9" name="Changes" comment="activating form in contact page and get the form when its sent in contact route and send an email with the data from the form">
+    <list default="true" id="3119b0b8-2102-4c5b-b0e6-cc4ecf35f2b9" name="Changes" comment="adding use of SQLALCHEMY DB. getting all posts from db when going to homepage. getting a specific post from db when clicking on post and going to its page to view it.">
+      <change afterPath="$PROJECT_DIR$/templates/add.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/about.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/contact.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/contact.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/footer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/header.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/post.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/post.html" afterDir="false" />
     </list>
@@ -139,7 +145,15 @@
       <option name="project" value="LOCAL‎" />
       <updated>1719690672769</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL‎-00010" summary="adding use of SQLALCHEMY DB. getting all posts from db when going to homepage. getting a specific post from db when clicking on post and going to its page to view it.">
+      <option name="closed" value="true" />
+      <created>1719997848504</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL‎-00010" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1719997848504</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -152,6 +166,7 @@
     <MESSAGE value="get all the posts in start of app and create a list of post objects with Post class.&#10;after clicking on link get the post id and use route to show the post page" />
     <MESSAGE value="adding styling with bootstrap" />
     <MESSAGE value="activating form in contact page and get the form when its sent in contact route and send an email with the data from the form" />
-    <option name="LAST_COMMIT_MESSAGE" value="activating form in contact page and get the form when its sent in contact route and send an email with the data from the form" />
+    <MESSAGE value="adding use of SQLALCHEMY DB. getting all posts from db when going to homepage. getting a specific post from db when clicking on post and going to its page to view it." />
+    <option name="LAST_COMMIT_MESSAGE" value="adding use of SQLALCHEMY DB. getting all posts from db when going to homepage. getting a specific post from db when clicking on post and going to its page to view it." />
   </component>
 </project>

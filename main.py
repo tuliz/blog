@@ -1,10 +1,15 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import datetime as dt
 import requests
 import smtplib
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import String, Float, Integer
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, URLField
+from wtforms.validators import DataRequired
+from flask_bootstrap import Bootstrap5
+
 
 class Base(DeclarativeBase):
     pass
@@ -19,7 +24,10 @@ Auth = ''
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
 db.init_app(app)
+bootstrap = Bootstrap5(app)
+app.config['SECRET_KEY'] = 'apple pie'
 
+# Database Post Table
 class Post(db.Model):
     id : Mapped[int] = mapped_column(Integer, primary_key=True)
     title : Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
@@ -29,18 +37,17 @@ class Post(db.Model):
     body: Mapped[str] = mapped_column(String(250), nullable=False)
 
 
-# with app.app_context():
-#     new_post = Post(
-#         title="days with dogs",
-#         subtitle="my 90 days with dogs",
-#         author="yarden tulchinsky",
-#         blog_image='https://www.walla.com',
-#         body='this is a post about a long 90 days with dogs'
-#     )
-#     db.session.add(new_post)
-#     db.session.commit()
+# WtfForms form for adding new post
+class addPostForm(FlaskForm):
+    title = StringField(validators=[DataRequired()])
+    subtitle = StringField(validators=[DataRequired()])
+    author = StringField(validators=[DataRequired()])
+    blog_image = URLField(validators=[DataRequired()])
+    body = StringField(validators=[DataRequired()])
+    submit = SubmitField()
 
 
+# route for homepage and fetching and displaying all posts
 @app.route('/', methods=['GET'])
 def get_home():
     year = dt.datetime.now().year
@@ -48,15 +55,35 @@ def get_home():
     return render_template('index.html', year=year, posts=all_posts)
 
 
+# route for fetching a specific post by id
 @app.route('/post/<int:post_id>', methods=['GET'])
 def get_post(post_id):
     post = db.session.execute(db.select(Post).where(Post.id == post_id)).scalar()
     return render_template('post.html', post=post)
 
 
+# route for getting to the about page
 @app.route('/about', methods=['GET'])
 def get_about():
     return render_template('about.html')
+
+
+# route for moving to add post form and add the new post to database
+@app.route('/new-post', methods=['GET','POST'])
+def add_post():
+    form = addPostForm()
+    if form.validate_on_submit():
+        new_post = Post(
+            title=form.title.data,
+            subtitle=form.subtitle.data,
+            author=form.author.data,
+            blog_image=form.blog_image.data,
+            body=form.body.data
+        )
+        db.session.add(new_post)
+        db.session.commit()
+        return redirect('/')
+    return render_template('add.html', form=form)
 
 
 @app.route('/contact', methods=["POST", "GET"])
