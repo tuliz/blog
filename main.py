@@ -1,40 +1,60 @@
 from flask import Flask, render_template, request
 import datetime as dt
 import requests
-from post import Post
 import smtplib
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import String, Float, Integer
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+
+class Base(DeclarativeBase):
+    pass
+
+db = SQLAlchemy(model_class=Base)
+
 
 EMAIL=''
 PASSWORD =''
 Auth = ''
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
+db.init_app(app)
 
-response = requests.get('https://api.npoint.io/c790b4d5cab58020d391')
-response.raise_for_status()
-all_posts = response.json()
-
-posts_list: list = []
-
-for post in all_posts:
-    new_post = Post(post['id'], post['title'], post['subtitle'], post['body'])
-    posts_list.append(new_post)
+class Post(db.Model):
+    id : Mapped[int] = mapped_column(Integer, primary_key=True)
+    title : Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
+    subtitle: Mapped[str] = mapped_column(String(250), nullable=False)
+    author: Mapped[str] = mapped_column(String(250), nullable=False)
+    blog_image: Mapped[str] = mapped_column(String(250), nullable=False)
+    body: Mapped[str] = mapped_column(String(250), nullable=False)
 
 
-@app.route('/')
+# with app.app_context():
+#     new_post = Post(
+#         title="days with dogs",
+#         subtitle="my 90 days with dogs",
+#         author="yarden tulchinsky",
+#         blog_image='https://www.walla.com',
+#         body='this is a post about a long 90 days with dogs'
+#     )
+#     db.session.add(new_post)
+#     db.session.commit()
+
+
+@app.route('/', methods=['GET'])
 def get_home():
     year = dt.datetime.now().year
-    return render_template('index.html', year=year, posts=posts_list)
+    all_posts = db.session.execute(db.select(Post)).scalars()
+    return render_template('index.html', year=year, posts=all_posts)
 
 
-@app.route('/post/<int:post_id>')
+@app.route('/post/<int:post_id>', methods=['GET'])
 def get_post(post_id):
-    for post in posts_list:
-        if post.id == post_id:
-            return render_template('post.html', post=post)
+    post = db.session.execute(db.select(Post).where(Post.id == post_id)).scalar()
+    return render_template('post.html', post=post)
 
 
-@app.route('/about')
+@app.route('/about', methods=['GET'])
 def get_about():
     return render_template('about.html')
 
